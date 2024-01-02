@@ -1,7 +1,7 @@
-import { useEditor, useToasts } from '@tldraw/tldraw'
-import { track } from '@vercel/analytics/react'
-import { useCallback } from 'react'
-import { makeReal } from '../lib/makeReal'
+import {useEditor, useToasts} from '@tldraw/tldraw'
+import {track} from '@vercel/analytics/react'
+import {useCallback} from 'react'
+import {makeReal} from '../lib/makeReal'
 
 export function useMakeReal() {
 	const editor = useEditor()
@@ -14,7 +14,7 @@ export function useMakeReal() {
 		track('make_real', { timestamp: Date.now() })
 
 		try {
-			await makeReal(editor, apiKey)
+			await makeReal(editor, apiKey, (message) => toast.addToast(message))
 		} catch (e: any) {
 			track('no_luck', { timestamp: Date.now() })
 

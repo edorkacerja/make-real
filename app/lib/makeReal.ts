@@ -1,10 +1,10 @@
-import { Editor, createShapeId, getSvgAsImage } from '@tldraw/tldraw'
-import { track } from '@vercel/analytics/react'
-import { PreviewShape } from '../PreviewShape/PreviewShape'
-import { getHtmlFromOpenAI } from './getHtmlFromOpenAI'
-import { uploadLink } from './uploadLink'
+import {createShapeId, Editor, getSvgAsImage} from '@tldraw/tldraw'
+import {track} from '@vercel/analytics/react'
+import {PreviewShape} from '../PreviewShape/PreviewShape'
+import {getHtmlFromOpenAI} from './getHtmlFromOpenAI'
+import {uploadLink} from './uploadLink'
 
-export async function makeReal(editor: Editor, apiKey: string) {
+export async function makeReal(editor: Editor, apiKey: string, showToast: Function) {
 	const newShapeId = createShapeId()
 	const selectedShapes = editor.getSelectedShapes()
 
@@ -77,6 +77,27 @@ export async function makeReal(editor: Editor, apiKey: string) {
 			throw Error('Could not generate a design from those wireframes.')
 		}
 
+
+		console.log("message", message);
+		const [firstNote, secondNote] = extractNotes(message);
+
+		console.log('First Note:', firstNote);
+		console.log('Second Note:', secondNote);
+
+		// showToast({
+		// 	title: 'GPT 4 Vision:',
+		// 	description: `${firstNote}`,
+		// 	keepOpen: true,
+		// })
+
+		showToast({
+			title: 'GPT 4 Vision:',
+			description: `${secondNote}`,
+			keepOpen: true,
+		})
+
+
+
 		await uploadLink(newShapeId, html)
 
 		editor.updateShape<PreviewShape>({
@@ -93,6 +114,24 @@ export async function makeReal(editor: Editor, apiKey: string) {
 		editor.deleteShape(newShapeId)
 		throw e
 	}
+}
+
+function extractNotes(message) {
+	const firstBacktickIndex = message.indexOf('```');
+	const lastBacktickIndex = message.lastIndexOf('```');
+
+	let firstNote = '';
+	let secondNote = '';
+
+	if (firstBacktickIndex !== -1) {
+		firstNote = message.substring(0, firstBacktickIndex).trim();
+	}
+
+	if (lastBacktickIndex !== -1 && lastBacktickIndex > firstBacktickIndex) {
+		secondNote = message.substring(lastBacktickIndex + 3).trim(); // +3 to move past the backticks
+	}
+
+	return [firstNote, secondNote];
 }
 
 export function blobToBase64(blob: Blob): Promise<string> {
