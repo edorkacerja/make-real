@@ -4,10 +4,11 @@ import {PreviewShape} from '../PreviewShape/PreviewShape'
 import {getHtmlFromOpenAI} from './getHtmlFromOpenAI'
 import {uploadLink} from './uploadLink'
 
-export async function makeReal(editor: Editor, apiKey: string, showToast: Function) {
+export async function makeReal(editor: Editor, apiKey: string, showToast: Function, themeStyle: string) {
 	const newShapeId = createShapeId()
 	const selectedShapes = editor.getSelectedShapes()
 
+	console.log("themeStyle from makeReal", themeStyle);
 	if (selectedShapes.length === 0) {
 		throw Error('First select something to make real.')
 	}
@@ -58,7 +59,8 @@ export async function makeReal(editor: Editor, apiKey: string, showToast: Functi
 			apiKey,
 			text: textFromShapes,
 			previousPreviews,
-			theme: editor.user.getUserPreferences().isDarkMode ? 'dark' : 'light',
+			theme: themeStyle,
+			// theme: editor.user.getUserPreferences().isDarkMode ? 'dark' : 'light',
 		})
 
 		if (json.error) {

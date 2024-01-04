@@ -2,10 +2,12 @@ import {useEditor, useToasts} from '@tldraw/tldraw'
 import {track} from '@vercel/analytics/react'
 import {useCallback} from 'react'
 import {makeReal} from '../lib/makeReal'
+import {useAppSelector} from "../lib/store/hooks";
 
 export function useMakeReal() {
 	const editor = useEditor()
 	const toast = useToasts()
+	const themeStyle  = useAppSelector(state => state.optionPanel.themeStyle);
 
 	return useCallback(async () => {
 		const input = document.getElementById('openai_key_risky_but_cool') as HTMLInputElement
@@ -14,7 +16,7 @@ export function useMakeReal() {
 		track('make_real', { timestamp: Date.now() })
 
 		try {
-			await makeReal(editor, apiKey, (message) => toast.addToast(message))
+			await makeReal(editor, apiKey, (message) => toast.addToast(message), themeStyle)
 		} catch (e: any) {
 			track('no_luck', { timestamp: Date.now() })
 
@@ -37,5 +39,5 @@ export function useMakeReal() {
 				],
 			})
 		}
-	}, [editor, toast])
+	}, [editor, toast, themeStyle])
 }
