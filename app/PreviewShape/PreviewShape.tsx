@@ -6,16 +6,16 @@ import {
 	Icon,
 	SvgExportContext,
 	TLBaseShape,
-	Vec2d,
 	toDomPrecision,
 	useIsEditing,
 	useToasts,
 	useValue,
+	Vec2d,
 } from '@tldraw/tldraw'
-import { useEffect } from 'react'
-import { Dropdown } from '../components/Dropdown'
-import { LINK_HOST, PROTOCOL } from '../lib/hosts'
-import { uploadLink } from '../lib/uploadLink'
+import {useEffect} from 'react'
+import {Dropdown} from '../components/Dropdown'
+import {LINK_HOST, PROTOCOL} from '../lib/hosts'
+import {uploadLink} from '../lib/uploadLink'
 
 export type PreviewShape = TLBaseShape<
 	'preview',
@@ -37,8 +37,8 @@ export class PreviewShapeUtil extends BaseBoxShapeUtil<PreviewShape> {
 		return {
 			html: '',
 			source: '',
-			w: (960 * 2) / 3,
-			h: (540 * 2) / 3,
+			w: (960 * 2) ,
+			h: (540 * 2) ,
 			dateCreated: Date.now(),
 		}
 	}

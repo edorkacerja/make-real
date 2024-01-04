@@ -33,28 +33,32 @@ function OptionPanel() {
                 <div className="field">
                     <label className="label">Theme Style:</label>
                     <div className="control">
-                        <div className="select">
-                            <select value={themeStyle} onChange={(e) => setThemeStyle(e.target.value)}>
-                                <option value="dark">Dark</option>
-                                <option value="light">Light</option>
-                            </select>
-                        </div>
+                        <label className="radio">
+                            <input type="radio" name="themeStyle" checked={themeStyle === 'dark'} onChange={() => setThemeStyle('dark')} /> Dark
+                        </label>
+                        <label className="radio">
+                            <input type="radio" name="themeStyle" checked={themeStyle === 'light'} onChange={() => setThemeStyle('light')} /> Light
+                        </label>
                     </div>
                 </div>
 
-                <div className="field">
-                    <label className="label">CSS Library/Framework:</label>
-                    <div className="control">
-                        <div className="select">
-                            <select value={cssLibrary} onChange={(e) => setCssLibrary(e.target.value)}>
-                                <option value="bootstrap">Bootstrap</option>
-                                <option value="tailwind">Tailwind CSS</option>
-                                <option value="material-ui">Material-UI</option>
-                                <option value="none">None</option>
-                            </select>
+                    <div className="field">
+                        <label className="label">CSS Library/Framework:</label>
+                        <div className="control">
+                            <label className="radio">
+                                <input type="radio" name="cssLibrary" checked={cssLibrary === 'bootstrap'} onChange={() => setCssLibrary('bootstrap')} /> Bootstrap
+                            </label>
+                            <label className="radio">
+                                <input type="radio" name="cssLibrary" checked={cssLibrary === 'tailwind'} onChange={() => setCssLibrary('tailwind')} /> Tailwind CSS
+                            </label>
+                            <label className="radio">
+                                <input type="radio" name="cssLibrary" checked={cssLibrary === 'material-ui'} onChange={() => setCssLibrary('material-ui')} /> Material-UI
+                            </label>
+                            <label className="radio">
+                                <input type="radio" name="cssLibrary" checked={cssLibrary === 'none'} onChange={() => setCssLibrary('none')} /> None
+                            </label>
                         </div>
                     </div>
-                </div>
 
                 <div className="field">
                     <label className="label">Layout Style:</label>
@@ -82,32 +86,81 @@ function OptionPanel() {
                     </div>
                 </div>
 
-                <div className="field">
-                    <label className="label">Responsive Design:</label>
-                    <div className="control">
-                        <div className="select">
-                            <select value={responsiveDesign} onChange={(e) => setResponsiveDesign(e.target.value)}>
-                                <option value="mobile-first">Mobile-First</option>
-                                <option value="desktop-first">Desktop-First</option>
-                                <option value="responsive">Responsive</option>
-                            </select>
+                    <div className="field">
+                        <label className="label">Responsive Design:</label>
+                        <div className="control">
+                            <label className="radio">
+                                <input
+                                    type="radio"
+                                    name="responsiveDesign"
+                                    value="mobile-first"
+                                    checked={responsiveDesign === 'mobile-first'}
+                                    onChange={() => setResponsiveDesign('mobile-first')}
+                                /> Mobile-First
+                            </label>
+                            <label className="radio">
+                                <input
+                                    type="radio"
+                                    name="responsiveDesign"
+                                    value="desktop-first"
+                                    checked={responsiveDesign === 'desktop-first'}
+                                    onChange={() => setResponsiveDesign('desktop-first')}
+                                /> Desktop-First
+                            </label>
+                            <label className="radio">
+                                <input
+                                    type="radio"
+                                    name="responsiveDesign"
+                                    value="responsive"
+                                    checked={responsiveDesign === 'responsive'}
+                                    onChange={() => setResponsiveDesign('responsive')}
+                                /> Responsive
+                            </label>
                         </div>
                     </div>
-                </div>
 
-                <div className="field">
-                    <label className="label">Navigation Style:</label>
-                    <div className="control">
-                        <div className="select">
-                            <select value={navigationStyle} onChange={(e) => setNavigationStyle(e.target.value)}>
-                                <option value="top-bar">Top Bar</option>
-                                <option value="sidebar">Sidebar</option>
-                                <option value="bottom-navigation">Bottom Navigation</option>
-                                <option value="hamburger-menu">Hamburger Menu</option>
-                            </select>
+                    <div className="field">
+                        <label className="label">Navigation Style:</label>
+                        <div className="control">
+                            <label className="radio">
+                                <input
+                                    type="radio"
+                                    name="navigationStyle"
+                                    value="top-bar"
+                                    checked={navigationStyle === 'top-bar'}
+                                    onChange={() => setNavigationStyle('top-bar')}
+                                /> Top Bar
+                            </label>
+                            <label className="radio">
+                                <input
+                                    type="radio"
+                                    name="navigationStyle"
+                                    value="sidebar"
+                                    checked={navigationStyle === 'sidebar'}
+                                    onChange={() => setNavigationStyle('sidebar')}
+                                /> Sidebar
+                            </label>
+                            <label className="radio">
+                                <input
+                                    type="radio"
+                                    name="navigationStyle"
+                                    value="bottom-navigation"
+                                    checked={navigationStyle === 'bottom-navigation'}
+                                    onChange={() => setNavigationStyle('bottom-navigation')}
+                                /> Bottom Navigation
+                            </label>
+                            <label className="radio">
+                                <input
+                                    type="radio"
+                                    name="navigationStyle"
+                                    value="hamburger-menu"
+                                    checked={navigationStyle === 'hamburger-menu'}
+                                    onChange={() => setNavigationStyle('hamburger-menu')}
+                                /> Hamburger Menu
+                            </label>
                         </div>
                     </div>
-                </div>
+
 
                 <div className="field">
                     <label className="label">Typography:</label>

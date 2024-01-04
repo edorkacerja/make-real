@@ -1,7 +1,8 @@
-import { Analytics } from '@vercel/analytics/react'
-import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import {Analytics} from '@vercel/analytics/react'
+import type {Metadata} from 'next'
+import {Inter} from 'next/font/google'
 import './globals.css'
+import StoreProvider from "./StoreProvider";
 
 const TITLE = 'make real • tldraw'
 const DESCRIPTION = 'Draw a ui and make it real with tldraw.'
@@ -77,7 +78,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 				/>
 			</head>
 			<body className={inter.className}>
-				{children}
+				<StoreProvider >
+					{children}
+				</StoreProvider>
 				<Analytics />
 			</body>
 		</html>
