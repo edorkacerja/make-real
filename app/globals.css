@@ -124,3 +124,9 @@ body {
 	height: 38px;
 	padding: 8px;
 }
+
+
+.tlui-style-panel__wrapper {
+	position: absolute;
+	right: -160px;
+}

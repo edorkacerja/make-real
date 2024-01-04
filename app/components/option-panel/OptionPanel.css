@@ -1,0 +1,49 @@
+.options-panel {
+    background: #fff;
+    position: absolute;
+    z-index: 1000;
+    right: -100%;
+    transition: right 0.3s ease-in-out;
+    top: 50px;
+    width: 350px;
+    border-radius: 5px;
+    padding: 5px;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.options-panel.open {
+    right: 0;
+}
+
+.section {
+    padding: 15px;
+}
+
+.section > .title {
+    padding-bottom: 15px;
+    border-bottom: 1px solid #ebe8e8;
+}
+
+.hamburger {
+    position: fixed;
+    top: 55px;
+    right: 10px;
+    z-index: 1500;
+    cursor: pointer;
+    transition: right 0.3s ease-in-out;
+    background: #ebe8e8;
+    color: black;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+
+}
+
+.hamburger.is-active {
+    right: 360px;
+    color: white;
+    background: black;
+}
