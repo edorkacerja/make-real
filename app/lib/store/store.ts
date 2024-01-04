@@ -1,10 +1,12 @@
 import {configureStore} from '@reduxjs/toolkit'
-import counterReducer from './features/counter/counterSlice'
+import counterReducer from './features/counterSlice'
+import optionPanelReducer from './features/optionPanelSlice';
 
 export const makeStore = () => {
     return configureStore({
         reducer: {
             counter: counterReducer,
+            optionPanel: optionPanelReducer,
         }
     })
 }

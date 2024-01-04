@@ -1,6 +1,6 @@
 import React from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {decrement, increment} from "../../lib/store/features/counter/counterSlice";
+import {decrement, increment} from "../../lib/store/features/counterSlice";
 
 export function CounterComponent() {
     // @ts-ignore

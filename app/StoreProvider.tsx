@@ -2,7 +2,7 @@
 import {useRef} from 'react'
 import {Provider} from 'react-redux'
 import {AppStore, makeStore} from './lib/store/store'
-import {initializeCount} from "./lib/store/features/counter/counterSlice";
+import {initializeCount} from "./lib/store/features/counterSlice";
 
 
 interface StoreProviderProps {

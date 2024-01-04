@@ -1,26 +1,39 @@
-import React, {useState} from 'react';
+import React from 'react';
+import {useAppDispatch, useAppSelector} from "../../lib/store/hooks";
 import 'bulma/css/bulma.min.css';
 import './OptionPanel.css';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faBars} from "@fortawesome/free-solid-svg-icons";
+import {
+    setCssLibrary,
+    setJsFramework,
+    setLayoutStyle,
+    setNavigationStyle,
+    setResponsiveDesign,
+    setThemeStyle,
+    setTypography,
+    togglePanel
+} from "../../lib/store/features/optionPanelSlice";
 
 function OptionPanel() {
-    const [themeStyle, setThemeStyle] = useState('');
-    const [cssLibrary, setCssLibrary] = useState('');
-    const [layoutStyle, setLayoutStyle] = useState('');
-    const [responsiveDesign, setResponsiveDesign] = useState('');
-    const [navigationStyle, setNavigationStyle] = useState('');
-    const [typography, setTypography] = useState('');
-    const [jsFramework, setJsFramework] = useState('');
-    const [isPanelOpen, setIsPanelOpen] = useState(false);
+    const dispatch = useAppDispatch();
+    const {
+        themeStyle,
+        cssLibrary,
+        layoutStyle,
+        responsiveDesign,
+        navigationStyle,
+        typography,
+        jsFramework,
+        isPanelOpen
+    } = useAppSelector(state => state.optionPanel);
 
-    const togglePanel = () => {
-        setIsPanelOpen(!isPanelOpen);
-    };
+    // Handlers for dispatching actions
+    const handleChange = (setter, value) => () => dispatch(setter(value));
 
     return (
         <>
-            <div className={`hamburger ${isPanelOpen ? 'is-active' : ''}`} onClick={togglePanel}>
+            <div className={`hamburger ${isPanelOpen ? 'is-active' : ''}`} onClick={() => dispatch(togglePanel())}>
                 <span className="icon">
                   <FontAwesomeIcon icon={faBars} />
                 </span>
@@ -30,32 +43,32 @@ function OptionPanel() {
                 <div className="section">
                 <h2 className="title is-4">Design Options</h2>
 
-                <div className="field">
-                    <label className="label">Theme Style:</label>
-                    <div className="control">
-                        <label className="radio">
-                            <input type="radio" name="themeStyle" checked={themeStyle === 'dark'} onChange={() => setThemeStyle('dark')} /> Dark
-                        </label>
-                        <label className="radio">
-                            <input type="radio" name="themeStyle" checked={themeStyle === 'light'} onChange={() => setThemeStyle('light')} /> Light
-                        </label>
+                    <div className="field">
+                        <label className="label">Theme Style:</label>
+                        <div className="control">
+                            <label className="radio">
+                                <input type="radio" name="themeStyle" checked={themeStyle === 'dark'} onChange={handleChange(setThemeStyle, 'dark')} /> Dark
+                            </label>
+                            <label className="radio">
+                                <input type="radio" name="themeStyle" checked={themeStyle === 'light'} onChange={handleChange(setThemeStyle, 'light')} /> Light
+                            </label>
+                        </div>
                     </div>
-                </div>
 
                     <div className="field">
                         <label className="label">CSS Library/Framework:</label>
                         <div className="control">
                             <label className="radio">
-                                <input type="radio" name="cssLibrary" checked={cssLibrary === 'bootstrap'} onChange={() => setCssLibrary('bootstrap')} /> Bootstrap
+                                <input type="radio" name="cssLibrary" checked={cssLibrary === 'bootstrap'} onChange={handleChange(setCssLibrary, 'bootstrap')} /> Bootstrap
                             </label>
                             <label className="radio">
-                                <input type="radio" name="cssLibrary" checked={cssLibrary === 'tailwind'} onChange={() => setCssLibrary('tailwind')} /> Tailwind CSS
+                                <input type="radio" name="cssLibrary" checked={cssLibrary === 'tailwind'} onChange={handleChange(setCssLibrary, 'tailwind')} /> Tailwind CSS
                             </label>
                             <label className="radio">
-                                <input type="radio" name="cssLibrary" checked={cssLibrary === 'material-ui'} onChange={() => setCssLibrary('material-ui')} /> Material-UI
+                                <input type="radio" name="cssLibrary" checked={cssLibrary === 'material-ui'} onChange={handleChange(setCssLibrary, 'material-ui')} /> Material-UI
                             </label>
                             <label className="radio">
-                                <input type="radio" name="cssLibrary" checked={cssLibrary === 'none'} onChange={() => setCssLibrary('none')} /> None
+                                <input type="radio" name="cssLibrary" checked={cssLibrary === 'none'} onChange={handleChange(setCssLibrary, 'none')} /> None
                             </label>
                         </div>
                     </div>
@@ -69,7 +82,7 @@ function OptionPanel() {
                                 name="layoutStyle"
                                 value="flexbox"
                                 checked={layoutStyle === 'flexbox'}
-                                onChange={() => setLayoutStyle('flexbox')}
+                                onChange={handleChange(setLayoutStyle, 'flexbox')}
                             />
                             Flexbox
                         </label>
@@ -79,7 +92,7 @@ function OptionPanel() {
                                 name="layoutStyle"
                                 value="grid"
                                 checked={layoutStyle === 'grid'}
-                                onChange={() => setLayoutStyle('grid')}
+                                onChange={handleChange(setLayoutStyle, 'grid')}
                             />
                             Grid
                         </label>
@@ -95,7 +108,7 @@ function OptionPanel() {
                                     name="responsiveDesign"
                                     value="mobile-first"
                                     checked={responsiveDesign === 'mobile-first'}
-                                    onChange={() => setResponsiveDesign('mobile-first')}
+                                    onChange={handleChange(setResponsiveDesign, 'mobile-first')}
                                 /> Mobile-First
                             </label>
                             <label className="radio">
@@ -104,7 +117,7 @@ function OptionPanel() {
                                     name="responsiveDesign"
                                     value="desktop-first"
                                     checked={responsiveDesign === 'desktop-first'}
-                                    onChange={() => setResponsiveDesign('desktop-first')}
+                                    onChange={handleChange(setResponsiveDesign, 'desktop-first')}
                                 /> Desktop-First
                             </label>
                             <label className="radio">
@@ -113,7 +126,7 @@ function OptionPanel() {
                                     name="responsiveDesign"
                                     value="responsive"
                                     checked={responsiveDesign === 'responsive'}
-                                    onChange={() => setResponsiveDesign('responsive')}
+                                    onChange={handleChange(setResponsiveDesign, 'responsive')}
                                 /> Responsive
                             </label>
                         </div>
@@ -128,7 +141,7 @@ function OptionPanel() {
                                     name="navigationStyle"
                                     value="top-bar"
                                     checked={navigationStyle === 'top-bar'}
-                                    onChange={() => setNavigationStyle('top-bar')}
+                                    onChange={handleChange(setNavigationStyle, 'top-bar')}
                                 /> Top Bar
                             </label>
                             <label className="radio">
@@ -137,7 +150,7 @@ function OptionPanel() {
                                     name="navigationStyle"
                                     value="sidebar"
                                     checked={navigationStyle === 'sidebar'}
-                                    onChange={() => setNavigationStyle('sidebar')}
+                                    onChange={handleChange(setNavigationStyle, 'sidebar')}
                                 /> Sidebar
                             </label>
                             <label className="radio">
@@ -146,7 +159,7 @@ function OptionPanel() {
                                     name="navigationStyle"
                                     value="bottom-navigation"
                                     checked={navigationStyle === 'bottom-navigation'}
-                                    onChange={() => setNavigationStyle('bottom-navigation')}
+                                    onChange={handleChange(setNavigationStyle, 'bottom-navigation')}
                                 /> Bottom Navigation
                             </label>
                             <label className="radio">
@@ -155,7 +168,7 @@ function OptionPanel() {
                                     name="navigationStyle"
                                     value="hamburger-menu"
                                     checked={navigationStyle === 'hamburger-menu'}
-                                    onChange={() => setNavigationStyle('hamburger-menu')}
+                                    onChange={handleChange(setNavigationStyle, 'hamburger-menu')}
                                 /> Hamburger Menu
                             </label>
                         </div>
@@ -169,7 +182,7 @@ function OptionPanel() {
                             className="input"
                             type="text"
                             value={typography}
-                            onChange={(e) => setTypography(e.target.value)}
+                            onChange={handleChange(setTypography, typography)}
                             placeholder="Enter font style..."
                         />
                     </div>
@@ -179,7 +192,7 @@ function OptionPanel() {
                     <label className="label">JS Library/Framework:</label>
                     <div className="control">
                         <div className="select">
-                            <select value={jsFramework} onChange={(e) => setJsFramework(e.target.value)}>
+                            <select value={jsFramework} onChange={handleChange(setJsFramework, jsFramework)}>
                                 <option value="react">React</option>
                                 <option value="vue">Vue.js</option>
                                 <option value="angular">Angular</option>
