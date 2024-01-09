@@ -7,7 +7,7 @@ import {useAppSelector} from "../lib/store/hooks";
 export function useMakeReal() {
 	const editor = useEditor()
 	const toast = useToasts()
-	const { themeStyle, cssLibrary, layoutStyle, responsiveDesign, navbarLocation } = useAppSelector(state => state.optionPanel);
+	const { themeStyle, cssLibrary, typography, layoutStyle, responsiveDesign, navbarLocation } = useAppSelector(state => state.optionPanel);
 
 
 	return useCallback(async () => {
@@ -17,7 +17,7 @@ export function useMakeReal() {
 		track('make_real', { timestamp: Date.now() })
 
 		try {
-			await makeReal(editor, apiKey, (message) => toast.addToast(message), themeStyle, cssLibrary, layoutStyle, responsiveDesign, navbarLocation)
+			await makeReal(editor, apiKey, (message) => toast.addToast(message), themeStyle, cssLibrary, layoutStyle, responsiveDesign, navbarLocation, typography)
 		} catch (e: any) {
 			track('no_luck', { timestamp: Date.now() })
 
@@ -40,5 +40,5 @@ export function useMakeReal() {
 				],
 			})
 		}
-	}, [editor, toast, themeStyle])
+	}, [editor, toast, themeStyle, cssLibrary, layoutStyle, responsiveDesign, navbarLocation, typography])
 }

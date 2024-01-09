@@ -12,6 +12,7 @@ export async function getHtmlFromOpenAI(
 		layoutStyle = 'flexbox',
 		responsiveDesign = 'responsive',
 		navbarLocation = 'top',
+		typography = 'sans-serif',
 	}: {
 		image: string
 		apiKey: string
@@ -22,14 +23,18 @@ export async function getHtmlFromOpenAI(
 		layoutStyle?: string
 		responsiveDesign?: string
 		navbarLocation?: string
+		typography?: string
 	}
 ) {
 	if (!apiKey) throw Error('You need to provide an API key (sorry)')
 
+	let systemPropmpt = getSystemPropmpt(cssLibrary, layoutStyle, responsiveDesign, navbarLocation, typography);
+	console.log("systemPropmpt", systemPropmpt)
+
 	const messages: GPT4VCompletionRequest['messages'] = [
 		{
 			role: 'system',
-			content: getSystemPropmpt(cssLibrary, layoutStyle, responsiveDesign, navbarLocation),
+			content: systemPropmpt,
 		},
 		{
 			role: 'user',

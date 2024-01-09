@@ -4,7 +4,7 @@ import {PreviewShape} from '../PreviewShape/PreviewShape'
 import {getHtmlFromOpenAI} from './getHtmlFromOpenAI'
 import {uploadLink} from './uploadLink'
 
-export async function makeReal(editor: Editor, apiKey: string, showToast: Function, themeStyle: string, cssLibrary:string, layoutStyle:string, responsiveDesign:string, navbarLocation:string) {
+export async function makeReal(editor: Editor, apiKey: string, showToast: Function, themeStyle: string, cssLibrary:string, layoutStyle:string, responsiveDesign:string, navbarLocation:string, typography:string) {
 	const newShapeId = createShapeId()
 	const selectedShapes = editor.getSelectedShapes()
 
@@ -64,6 +64,8 @@ export async function makeReal(editor: Editor, apiKey: string, showToast: Functi
 			layoutStyle: layoutStyle,
 			responsiveDesign: responsiveDesign,
 			navbarLocation: navbarLocation,
+			typography: typography,
+
 			// theme: editor.user.getUserPreferences().isDarkMode ? 'dark' : 'light',
 		})
 

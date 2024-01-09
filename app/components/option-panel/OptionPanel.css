@@ -47,3 +47,27 @@
     color: white;
     background: black;
 }
+
+.font-preview {
+    border: 2px solid #20ff48;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.fonts-dropdown-menu {
+    max-height: 400px;
+    overflow: auto;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.fonts-dropdown-menu>div {
+    cursor: pointer;
+    padding: 5px 10px;
+    border-bottom: 1px solid lightgrey;
+}
+
+.fonts-dropdown-menu>div:hover {
+    background: #b9b9b9;
+    color: white;
+}

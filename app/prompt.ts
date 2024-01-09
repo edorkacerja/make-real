@@ -1,5 +1,5 @@
 
-export function getSystemPropmpt(cssLibrary, layoutStyle, responsiveDesign, navbarLocation) {
+export function getSystemPropmpt(cssLibrary, layoutStyle, responsiveDesign, navbarLocation, typography) {
 
 	return `
 
@@ -13,9 +13,11 @@ Use ${cssLibrary} for styling. If you must use other CSS, place it in a style ta
 
 Use ${layoutStyle} for container's layout design. If you must use other HTML, place it in a div tag.
 
-Please, if there is a navbar on the design put the navbar on the ${navbarLocation} of the website and make it s.
+Please, if there is a navbar in the design put the navbar on the ${navbarLocation} of the website and make it fixed style.
 
-Put any JavaScript in a script tag. Use unpkg or skypack to import any required JavaScript dependencies. Use Google fonts to pull in any open source fonts you require. If you have any images, load them from Unsplash or use solid colored rectangles as placeholders. 
+Put any JavaScript in a script tag. Use unpkg or skypack to import any required JavaScript dependencies. Use ${typography} Font from Google Fonts please. 
+
+If you have any images, load them from Unsplash or use solid colored rectangles as placeholders. 
 
 The designs may include flow charts, diagrams, labels, arrows, sticky notes, screenshots of other applications, or even previous designs. Treat all of these as references for your prototype. Use your best judgement to determine what is an annotation and what should be included in the final result. Treat anything in the color red as an annotation rather than part of the design. Do NOT include any red elements or any other annotations in your final result.
 

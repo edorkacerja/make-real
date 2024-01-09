@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {useAppDispatch, useAppSelector} from "../../lib/store/hooks";
 import 'bulma/css/bulma.min.css';
 import './OptionPanel.css';
@@ -14,6 +14,7 @@ import {
     setTypography,
     togglePanel
 } from "../../lib/store/features/optionPanelSlice";
+import {useDebounce} from "use-debounce";
 
 function OptionPanel() {
     const dispatch = useAppDispatch();
@@ -28,8 +29,48 @@ function OptionPanel() {
         isPanelOpen
     } = useAppSelector(state => state.optionPanel);
 
+    const [fontSearchTerm, setFontSearchTerm] = useState('');
+    const [debouncedFontSearchTerm] = useDebounce(fontSearchTerm, 1000);
+    const [fontSearchResults, setFontSearchResults] = useState([]);
+
+
+    useEffect(() => {
+        if (debouncedFontSearchTerm) {
+            fetch(`https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyDb7y2eeakiVdc0YrYwazPMrgTwt5uvHMg`)
+                .then(response => response.json())
+                .then(data => {
+                    const filteredFonts = data.items.filter(font =>
+                        font.family.toLowerCase().includes(debouncedFontSearchTerm.toLowerCase()));
+                    setFontSearchResults(filteredFonts);
+                })
+                .catch(error => console.error('Error:', error));
+        } else {
+            setFontSearchResults([]);
+        }
+    }, [debouncedFontSearchTerm]);
+
+    // Fetch the font CSS when a new font is selected
+    useEffect(() => {
+        if (typography) {
+            const fontUrl = `https://fonts.googleapis.com/css?family=${typography.replace(/ /g, '+')}`;
+            const link = document.createElement('link');
+            link.href = fontUrl;
+            link.rel = 'stylesheet';
+            document.head.appendChild(link);
+        }
+
+    }, [typography]);
+
+
     // Handlers for dispatching actions
     const handleChange = (setter, value) => () => dispatch(setter(value));
+
+
+    function handleFontSelection(fontFamily) {
+        dispatch(setTypography(fontFamily));
+        setFontSearchTerm('');
+        setFontSearchResults([]);
+    }
 
     return (
         <>
@@ -75,6 +116,35 @@ function OptionPanel() {
                             </label>
                         </div>
                     </div>
+
+                    <div className="field">
+                        <label className="label">Typography:</label>
+                        <div className="control">
+                            <input
+                                className="input"
+                                type="text"
+                                value={fontSearchTerm}
+                                onChange={(e) => setFontSearchTerm(e.target.value)}
+                                placeholder="Search for fonts..."
+                            />
+                            <div className={"fonts-dropdown-menu"}>
+                                {fontSearchResults.map(font => (
+                                    <div key={font.family} onClick={() => handleFontSelection(font.family)}>
+                                        {font.family}
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                        {typography && (
+                            <p className="selected-font">Selected Font: <strong>{typography}</strong></p>
+                        )}
+                    </div>
+
+                    {typography && (
+                        <div className="font-preview" style={{ fontFamily: typography }}>
+                            Preview: The quick brown fox jumps over the lazy dog
+                        </div>
+                    )}
 
                 <div className="field">
                     <label className="label">Layout Style:</label>
@@ -176,33 +246,21 @@ function OptionPanel() {
                     </div>
 
 
-                <div className="field">
-                    <label className="label">Typography:</label>
-                    <div className="control">
-                        <input
-                            className="input"
-                            type="text"
-                            value={typography}
-                            onChange={handleChange(setTypography, typography)}
-                            placeholder="Enter font style..."
-                        />
-                    </div>
-                </div>
-
-                <div className="field">
-                    <label className="label">JS Library/Framework:</label>
-                    <div className="control">
-                        <div className="select">
-                            <select value={jsFramework} onChange={handleChange(setJsFramework, jsFramework)}>
-                                <option value="react">React</option>
-                                <option value="vue">Vue.js</option>
-                                <option value="angular">Angular</option>
-                                <option value="none">None</option>
-                            </select>
+                    <div className="field">
+                        <label className="label">JS Library/Framework:</label>
+                        <div className="control">
+                            <div className="select">
+                                <select value={jsFramework} onChange={handleChange(setJsFramework, jsFramework)}>
+                                    <option value="react">React</option>
+                                    <option value="vue">Vue.js</option>
+                                    <option value="angular">Angular</option>
+                                    <option value="none">None</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
+
                 </div>
-            </div>
             </div>
         </>
     );
