@@ -8,7 +8,10 @@ export async function getHtmlFromOpenAI(
 		text,
 		theme = 'light',
 		previousPreviews,
-		cssLibrary
+		cssLibrary = 'tailwind',
+		layoutStyle = 'flexbox',
+		responsiveDesign = 'responsive',
+		navbarLocation = 'top',
 	}: {
 		image: string
 		apiKey: string
@@ -16,6 +19,9 @@ export async function getHtmlFromOpenAI(
 		theme?: string
 		previousPreviews?: PreviewShape[]
 		cssLibrary?: string
+		layoutStyle?: string
+		responsiveDesign?: string
+		navbarLocation?: string
 	}
 ) {
 	if (!apiKey) throw Error('You need to provide an API key (sorry)')
@@ -23,7 +29,7 @@ export async function getHtmlFromOpenAI(
 	const messages: GPT4VCompletionRequest['messages'] = [
 		{
 			role: 'system',
-			content: getSystemPropmpt(cssLibrary),
+			content: getSystemPropmpt(cssLibrary, layoutStyle, responsiveDesign, navbarLocation),
 		},
 		{
 			role: 'user',

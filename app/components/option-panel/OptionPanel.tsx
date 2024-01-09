@@ -8,7 +8,7 @@ import {
     setCssLibrary,
     setJsFramework,
     setLayoutStyle,
-    setNavigationStyle,
+    setNavbarLocation,
     setResponsiveDesign,
     setThemeStyle,
     setTypography,
@@ -22,7 +22,7 @@ function OptionPanel() {
         cssLibrary,
         layoutStyle,
         responsiveDesign,
-        navigationStyle,
+        navbarLocation,
         typography,
         jsFramework,
         isPanelOpen
@@ -68,6 +68,9 @@ function OptionPanel() {
                                 <input type="radio" name="cssLibrary" checked={cssLibrary === 'material-ui'} onChange={handleChange(setCssLibrary, 'material-ui')} /> Material-UI
                             </label>
                             <label className="radio">
+                                <input type="radio" name="cssLibrary" checked={cssLibrary === 'bulma-css'} onChange={handleChange(setCssLibrary, 'bulma-css')} /> Bulma CSS
+                            </label>
+                            <label className="radio">
                                 <input type="radio" name="cssLibrary" checked={cssLibrary === 'none'} onChange={handleChange(setCssLibrary, 'none')} /> None
                             </label>
                         </div>
@@ -83,8 +86,7 @@ function OptionPanel() {
                                 value="flexbox"
                                 checked={layoutStyle === 'flexbox'}
                                 onChange={handleChange(setLayoutStyle, 'flexbox')}
-                            />
-                            Flexbox
+                            /> Flexbox
                         </label>
                         <label className="radio">
                             <input
@@ -93,8 +95,7 @@ function OptionPanel() {
                                 value="grid"
                                 checked={layoutStyle === 'grid'}
                                 onChange={handleChange(setLayoutStyle, 'grid')}
-                            />
-                            Grid
+                            /> Grid
                         </label>
                     </div>
                 </div>
@@ -133,43 +134,43 @@ function OptionPanel() {
                     </div>
 
                     <div className="field">
-                        <label className="label">Navigation Style:</label>
+                        <label className="label">Navbar Location:</label>
                         <div className="control">
                             <label className="radio">
                                 <input
                                     type="radio"
-                                    name="navigationStyle"
-                                    value="top-bar"
-                                    checked={navigationStyle === 'top-bar'}
-                                    onChange={handleChange(setNavigationStyle, 'top-bar')}
-                                /> Top Bar
+                                    name="navbarLocation"
+                                    value="top"
+                                    checked={navbarLocation === 'top'}
+                                    onChange={handleChange(setNavbarLocation, 'top')}
+                                /> Top
                             </label>
                             <label className="radio">
                                 <input
                                     type="radio"
-                                    name="navigationStyle"
-                                    value="sidebar"
-                                    checked={navigationStyle === 'sidebar'}
-                                    onChange={handleChange(setNavigationStyle, 'sidebar')}
-                                /> Sidebar
+                                    name="navbarLocation"
+                                    value="left"
+                                    checked={navbarLocation === 'left'}
+                                    onChange={handleChange(setNavbarLocation, 'left')}
+                                /> Left
                             </label>
                             <label className="radio">
                                 <input
                                     type="radio"
-                                    name="navigationStyle"
-                                    value="bottom-navigation"
-                                    checked={navigationStyle === 'bottom-navigation'}
-                                    onChange={handleChange(setNavigationStyle, 'bottom-navigation')}
-                                /> Bottom Navigation
+                                    name="navbarLocation"
+                                    value="right"
+                                    checked={navbarLocation === 'right'}
+                                    onChange={handleChange(setNavbarLocation, 'right')}
+                                /> Right
                             </label>
                             <label className="radio">
                                 <input
                                     type="radio"
-                                    name="navigationStyle"
-                                    value="hamburger-menu"
-                                    checked={navigationStyle === 'hamburger-menu'}
-                                    onChange={handleChange(setNavigationStyle, 'hamburger-menu')}
-                                /> Hamburger Menu
+                                    name="navbarLocation"
+                                    value="bottom"
+                                    checked={navbarLocation === 'bottom'}
+                                    onChange={handleChange(setNavbarLocation, 'bottom')}
+                                /> Bottom
                             </label>
                         </div>
                     </div>

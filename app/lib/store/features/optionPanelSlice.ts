@@ -5,7 +5,7 @@ interface OptionPanelState {
     cssLibrary: string;
     layoutStyle: string;
     responsiveDesign: string;
-    navigationStyle: string;
+    navbarLocation: string;
     typography: string;
     jsFramework: string;
     isPanelOpen: boolean;
@@ -16,7 +16,7 @@ const initialState: OptionPanelState = {
     cssLibrary: '',
     layoutStyle: '',
     responsiveDesign: '',
-    navigationStyle: '',
+    navbarLocation: '',
     typography: '',
     jsFramework: '',
     isPanelOpen: false,
@@ -41,8 +41,8 @@ const optionPanelSlice = createSlice({
         setResponsiveDesign: (state, action: PayloadAction<string>) => {
             state.responsiveDesign = action.payload;
         },
-        setNavigationStyle: (state, action: PayloadAction<string>) => {
-            state.navigationStyle = action.payload;
+        setNavbarLocation: (state, action: PayloadAction<string>) => {
+            state.navbarLocation = action.payload;
         },
         setTypography: (state, action: PayloadAction<string>) => {
             state.typography = action.payload;
@@ -58,7 +58,7 @@ const optionPanelSlice = createSlice({
 
 export const {
     setThemeStyle, setCssLibrary, setLayoutStyle,
-    setResponsiveDesign, setNavigationStyle,
+    setResponsiveDesign, setNavbarLocation,
     setTypography, setJsFramework, togglePanel
 } = optionPanelSlice.actions;
 
