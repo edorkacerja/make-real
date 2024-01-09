@@ -1,9 +1,5 @@
-import { PreviewShape } from '../PreviewShape/PreviewShape'
-import {
-	OPENAI_USER_PROMPT,
-	OPENAI_USER_PROMPT_WITH_PREVIOUS_DESIGN,
-	OPEN_AI_SYSTEM_PROMPT,
-} from '../prompt'
+import {PreviewShape} from '../PreviewShape/PreviewShape'
+import {getSystemPropmpt, OPENAI_USER_PROMPT, OPENAI_USER_PROMPT_WITH_PREVIOUS_DESIGN,} from '../prompt'
 
 export async function getHtmlFromOpenAI(
 	{
@@ -12,12 +8,14 @@ export async function getHtmlFromOpenAI(
 		text,
 		theme = 'light',
 		previousPreviews,
+		cssLibrary
 	}: {
 		image: string
 		apiKey: string
 		text: string
 		theme?: string
 		previousPreviews?: PreviewShape[]
+		cssLibrary?: string
 	}
 ) {
 	if (!apiKey) throw Error('You need to provide an API key (sorry)')
@@ -25,7 +23,7 @@ export async function getHtmlFromOpenAI(
 	const messages: GPT4VCompletionRequest['messages'] = [
 		{
 			role: 'system',
-			content: OPEN_AI_SYSTEM_PROMPT,
+			content: getSystemPropmpt(cssLibrary),
 		},
 		{
 			role: 'user',

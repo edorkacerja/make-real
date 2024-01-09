@@ -4,7 +4,7 @@ import {PreviewShape} from '../PreviewShape/PreviewShape'
 import {getHtmlFromOpenAI} from './getHtmlFromOpenAI'
 import {uploadLink} from './uploadLink'
 
-export async function makeReal(editor: Editor, apiKey: string, showToast: Function, themeStyle: string) {
+export async function makeReal(editor: Editor, apiKey: string, showToast: Function, themeStyle: string, cssLibrary:string) {
 	const newShapeId = createShapeId()
 	const selectedShapes = editor.getSelectedShapes()
 
@@ -13,7 +13,7 @@ export async function makeReal(editor: Editor, apiKey: string, showToast: Functi
 		throw Error('First select something to make real.')
 	}
 
-	const { maxX, midY } = editor.getSelectionPageBounds()
+	const { maxX, y, w, h } = editor.getSelectionPageBounds()
 
 	const previousPreviews = selectedShapes.filter((shape) => {
 		return shape.type === 'preview'
@@ -42,9 +42,9 @@ export async function makeReal(editor: Editor, apiKey: string, showToast: Functi
 	editor.createShape<PreviewShape>({
 		id: newShapeId,
 		type: 'preview',
-		x: maxX + 60, // to the right of the selection
-		y: midY - (540 * 2) / 3 / 2, // half the height of the preview's initial shape
-		props: { html: '', source: dataUrl as string },
+		x: maxX + 80, // to the right of the selection
+		y: y,
+		props: { html: '', source: dataUrl as string, w: w, h: h },
 	})
 
 	if (previousPreviews.length > 0) {
@@ -60,6 +60,7 @@ export async function makeReal(editor: Editor, apiKey: string, showToast: Functi
 			text: textFromShapes,
 			previousPreviews,
 			theme: themeStyle,
+			cssLibrary: cssLibrary,
 			// theme: editor.user.getUserPreferences().isDarkMode ? 'dark' : 'light',
 		})
 

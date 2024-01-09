@@ -8,6 +8,8 @@ export function useMakeReal() {
 	const editor = useEditor()
 	const toast = useToasts()
 	const themeStyle  = useAppSelector(state => state.optionPanel.themeStyle);
+	const cssLibrary = useAppSelector(state => state.optionPanel.cssLibrary);
+
 
 	return useCallback(async () => {
 		const input = document.getElementById('openai_key_risky_but_cool') as HTMLInputElement
@@ -16,7 +18,7 @@ export function useMakeReal() {
 		track('make_real', { timestamp: Date.now() })
 
 		try {
-			await makeReal(editor, apiKey, (message) => toast.addToast(message), themeStyle)
+			await makeReal(editor, apiKey, (message) => toast.addToast(message), themeStyle, cssLibrary)
 		} catch (e: any) {
 			track('no_luck', { timestamp: Date.now() })
 
