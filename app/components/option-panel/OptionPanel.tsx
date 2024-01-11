@@ -28,11 +28,21 @@ function OptionPanel() {
         jsFramework,
         isPanelOpen
     } = useAppSelector(state => state.optionPanel);
+    const [isCustomCssLibrary, setIsCustomCssLibrary] = useState(false);
+    const [customCssLibraryUrl, setCustomCssLibraryUrl] = useState('');
+
 
     const [fontSearchTerm, setFontSearchTerm] = useState('');
     const [debouncedFontSearchTerm] = useDebounce(fontSearchTerm, 1000);
     const [fontSearchResults, setFontSearchResults] = useState([]);
+    const [debouncedCustomCssLibraryUrl] = useDebounce(customCssLibraryUrl, 500); // 500ms debounce time
 
+
+    useEffect(() => {
+        if (isCustomCssLibrary && debouncedCustomCssLibraryUrl !== 'custom') {
+            dispatch(setCssLibrary(debouncedCustomCssLibraryUrl));
+        }
+    }, [debouncedCustomCssLibraryUrl, isCustomCssLibrary, dispatch]);
 
     useEffect(() => {
         if (debouncedFontSearchTerm) {
@@ -63,7 +73,23 @@ function OptionPanel() {
 
 
     // Handlers for dispatching actions
-    const handleChange = (setter, value) => () => dispatch(setter(value));
+    const handleChange = (setter, value) => () => {
+        dispatch(setter(value));
+        setIsCustomCssLibrary(false);
+        setCustomCssLibraryUrl('');
+    };
+
+    const handleCustomChange = () => {
+        if (cssLibrary === 'custom') {
+            // If already on custom, switch back to a default option (e.g., 'none')
+            dispatch(setCssLibrary('none'));
+            setIsCustomCssLibrary(false);
+        } else {
+            dispatch(setCssLibrary('custom'));
+            setIsCustomCssLibrary(true);
+        }
+    };
+
 
 
     function handleFontSelection(fontFamily) {
@@ -114,6 +140,21 @@ function OptionPanel() {
                             <label className="radio">
                                 <input type="radio" name="cssLibrary" checked={cssLibrary === 'none'} onChange={handleChange(setCssLibrary, 'none')} /> None
                             </label>
+                            <label className="radio">
+                                <input type="radio" name="cssLibrary" checked={cssLibrary === 'custom'} onChange={handleCustomChange} /> Custom
+                            </label>
+
+                            {isCustomCssLibrary && (
+                                <input
+                                    className="input"
+                                    type="text"
+                                    value={customCssLibraryUrl}
+                                    onChange={(e) => setCustomCssLibraryUrl(e.target.value)}
+                                    placeholder="Enter custom library URL"
+                                />
+                            )}
+
+
                         </div>
                     </div>
 
