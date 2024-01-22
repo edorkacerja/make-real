@@ -292,6 +292,7 @@ function OptionPanel() {
                         <div className="control">
                             <div className="select">
                                 <select value={jsFramework} onChange={handleChange(setJsFramework, jsFramework)}>
+                                    <option value="jquery">jQuery</option> {/* Added jQuery option */}
                                     <option value="react">React</option>
                                     <option value="vue">Vue.js</option>
                                     <option value="angular">Angular</option>

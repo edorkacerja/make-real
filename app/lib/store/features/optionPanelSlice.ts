@@ -12,13 +12,13 @@ interface OptionPanelState {
 }
 
 const initialState: OptionPanelState = {
-    themeStyle: '',
-    cssLibrary: '',
-    layoutStyle: '',
-    responsiveDesign: '',
-    navbarLocation: '',
-    typography: '',
-    jsFramework: '',
+    themeStyle: 'light',
+    cssLibrary: 'tailwind',
+    layoutStyle: 'flexbox',
+    responsiveDesign: 'responsive',
+    navbarLocation: 'top',
+    typography: 'Roboto Condensed',
+    jsFramework: 'jQuery',
     isPanelOpen: false,
 };
 
