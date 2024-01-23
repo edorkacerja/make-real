@@ -1,6 +1,4 @@
-'use server'
-
-import { sql } from '@vercel/postgres'
+import {sql} from '@vercel/postgres'
 
 export async function uploadLink(shapeId: string, html: string) {
 	if (typeof shapeId !== 'string' || !shapeId.startsWith('shape:')) {
