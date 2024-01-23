@@ -2,7 +2,6 @@ import {createShapeId, Editor, getSvgAsImage} from '@tldraw/tldraw'
 import {track} from '@vercel/analytics/react'
 import {PreviewShape} from '../PreviewShape/PreviewShape'
 import {getHtmlFromOpenAI} from './getHtmlFromOpenAI'
-import {uploadLink} from './uploadLink'
 
 export async function makeReal(editor: Editor, apiKey: string, showToast: Function, themeStyle: string, cssLibrary:string, layoutStyle:string, responsiveDesign:string, navbarLocation:string, typography:string) {
 	const newShapeId = createShapeId()
@@ -106,7 +105,24 @@ export async function makeReal(editor: Editor, apiKey: string, showToast: Functi
 
 
 
-		await uploadLink(newShapeId, html)
+		// await uploadLink(newShapeId, html)
+
+		try {
+			const response = await fetch('/makereal.tldraw.link/api/upload', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({
+					"shapeId": newShapeId,
+					"html": html,
+				}),
+			}).then(async (r) => r.json())
+
+			if (response.success) {
+				console.log(response)
+			}
+		} catch (e) {
+			console.error(e.message)
+		}
 
 		editor.updateShape<PreviewShape>({
 			id: newShapeId,

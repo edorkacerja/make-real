@@ -15,7 +15,6 @@ import {
 import {useEffect} from 'react'
 import {Dropdown} from '../components/Dropdown'
 import {LINK_HOST, PROTOCOL} from '../lib/hosts'
-import {uploadLink} from '../lib/uploadLink'
 
 export type PreviewShape = TLBaseShape<
 	'preview',
@@ -69,7 +68,23 @@ export class PreviewShapeUtil extends BaseBoxShapeUtil<PreviewShape> {
 			let isCancelled = false
 			if (html && (linkUploadVersion === undefined || uploadedShapeId !== shape.id)) {
 				;(async () => {
-					await uploadLink(shape.id, html)
+					// await uploadLink(newShapeId, html)
+					try {
+						const response = await fetch('/makereal.tldraw.link/api/upload', {
+							method: 'POST',
+							headers: { 'Content-Type': 'application/json' },
+							body: JSON.stringify({
+								"shapeId": shape.id,
+								"html": html,
+							}),
+						}).then(async (r) => r.json())
+
+						if (response.success) {
+							console.log(response)
+						}
+					} catch (e) {
+						console.error(e.message)
+					}
 					if (isCancelled) return
 
 					this.editor.updateShape<PreviewShape>({
