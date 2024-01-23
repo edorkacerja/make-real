@@ -17,6 +17,11 @@ import {
 import {useDebounce} from "use-debounce";
 
 function OptionPanel() {
+
+    console.log('------------------------------------');
+    console.log(process.env.NEXT_PUBLIC_API_URL);
+
+
     const dispatch = useAppDispatch();
     const {
         themeStyle,
